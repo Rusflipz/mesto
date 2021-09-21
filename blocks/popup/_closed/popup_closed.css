@@ -1,0 +1,13 @@
+.popup_closed {
+    opacity: 1;
+    animation: close 2.5s forwards;
+}
+
+@keyframes close {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

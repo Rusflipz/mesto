@@ -11,8 +11,9 @@
     overflow: hidden;
     background-size: cover;
     flex-wrap: nowrap;
-    left: 435px;
-    top: -35px;
+    left: 100%;
+    top: 0%;
+    transform: translate(20%, -120%);
 }
 
 .popup__exit-button:hover {
@@ -23,7 +24,6 @@
     .popup__exit-button {
         width: 20px;
         height: 20px;
-        left: 263px;
-        top: -39px;
+        transform: translate(-100%, -150%);
     }
 }

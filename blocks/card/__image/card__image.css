@@ -1,4 +1,7 @@
 .card__image {
-    display: block;
+    align-self: center;
+    display: flex;
     width: 100%;
+    height: 282px;
+    border-radius: 10px 10px 0 0;
 }
