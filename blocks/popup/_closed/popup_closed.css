@@ -1,6 +1,6 @@
 .popup_closed {
     opacity: 1;
-    animation: close 2.5s forwards;
+    animation: close 1.5s forwards;
 }
 
 @keyframes close {
