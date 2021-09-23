@@ -1,7 +1,7 @@
 .popup_opened {
     display: block;
     opacity: 0;
-    animation: open 2.5s forwards;
+    animation: open 1.5s forwards;
     transition: 0;
 }
 
