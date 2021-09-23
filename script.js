@@ -107,6 +107,10 @@ popupAddOpen.addEventListener('click', function() {
     openPopup(popupAdd)
 })
 
+popupAddClose.addEventListener('click', function() {
+    closePopup(popupAdd)
+})
+
 popupImgClose.addEventListener('click', function() {
     closePopup(popupImg)
 })
