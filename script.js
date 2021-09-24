@@ -14,6 +14,8 @@ const profileName = document.querySelector(".profile__name_text");
 const ProfileCaption = document.querySelector(".profile__caption");
 const popupImg = document.querySelector('.popup_img');
 const popupImgClose = document.querySelector(".popup__exit-button_img");
+const popupNameInput = popupEdit.querySelector('.popup__input_name');
+const popupCaptionInput = popupEdit.querySelector('.popup__input_caption');
 
 const initialCards = [{
         name: 'Архыз',
@@ -46,6 +48,7 @@ function createCard(cardData) {
     const cardElement = template.querySelector('.card').cloneNode(true);
     cardElement.querySelector('.card__text').textContent = cardData.name;
     cardElement.querySelector('.card__image').setAttribute('src', cardData.link);
+    cardElement.querySelector('.card__image').setAttribute('alt', cardData.name);
     const likeButton = cardElement.querySelector('.card__like');
     likeButton.addEventListener('click', function(evt) {
         evt.target.classList.toggle('card__like_active');
@@ -53,36 +56,29 @@ function createCard(cardData) {
     const deleteButton = cardElement.querySelector('.card__delete-button');
     deleteButton.addEventListener('click', function(evt) {
         const target = evt.target;
-        const parent = target.parentElement;
-        parent.parentElement.remove();
+        const parent = target.closest('.card');
+        parent.remove();
     })
     const cardImage = cardElement.querySelector('.card__image');
     cardImage.addEventListener('click', function(evt) {
         const cardImageSrc = evt.target.getAttribute('src');
         const popupImage = document.querySelector('.popup__image');
         popupImage.setAttribute('src', cardImageSrc);
-        popupImage.setAttribute('alt', 'Невозможно загрузить картинку');
         const cardText = cardElement.querySelector('.card__text').textContent;
         const popupText = document.querySelector('.popup__text');
         popupText.textContent = cardText;
+        popupImage.setAttribute('alt', cardText);
         openPopup(popupImg);
     })
     return cardElement;
 }
 
 function openPopup(popup) {
-    popup.classList.toggle('popup_opened');
+    popup.classList.add('popup_opened');
 }
 
 function closePopup(popup) {
-    popup.classList.toggle('popup_closed');
-    setTimeout(
-        () => {
-            popup.classList.toggle('popup_opened');
-            popup.classList.toggle('popup_closed');
-        },
-        1.5 * 1000
-    );
+    popup.classList.remove('popup_opened');
 }
 
 function editProfile(name, caption) {
@@ -96,6 +92,8 @@ initialCards.forEach(cardData => {
 })
 
 popupEditOpen.addEventListener('click', function() {
+    popupNameInput.value = profileName.textContent;
+    popupCaptionInput.value = ProfileCaption.textContent;
     openPopup(popupEdit)
 })
 
@@ -116,28 +114,26 @@ popupImgClose.addEventListener('click', function() {
 })
 
 popupAddButton.addEventListener('click', function() {
-    const popupInputs = popupAdd.querySelectorAll('.popup__input');
-    const popupText = popupInputs[0].value;
-    const popupLink = popupInputs[1].value;
+    const popupTextInput = popupAdd.querySelector('.popup__input_cardname');
+    const popupLinkInput = popupAdd.querySelector('.popup__input_link');
+    const popupText = popupTextInput.value;
+    const popupLink = popupLinkInput.value;
     const NewCard = {
         name: popupText,
         link: popupLink
     }
-    popupInputs[0].value = '';
-    popupInputs[1].value = '';
+    popupTextInput.value = '';
+    popupLinkInput.value = '';
     const card = createCard(NewCard);
     containerCards.prepend(card);
     closePopup(popupAdd)
 })
 
 popupEditButton.addEventListener('click', function() {
-    const popupInputs = popupEdit.querySelectorAll('.popup__input');
-    const name = popupInputs[0].value;
-    const caption = popupInputs[1].value;
+    const name = popupNameInput.value;
+    const caption = popupCaptionInput.value;
     editProfile(name, caption);
-    popupInputs[0].placeholder = name;
-    popupInputs[1].placeholder = caption;
-    popupInputs[0].value = '';
-    popupInputs[1].value = '';
+    popupNameInput.value = '';
+    popupCaptionInput.value = '';
     closePopup(popupEdit)
 })

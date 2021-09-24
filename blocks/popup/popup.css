@@ -1,22 +1,14 @@
 .popup {
     width: 100%;
     min-height: 100%;
-    display: none;
+    /* display: none; */
     overflow: hidden;
     position: fixed;
     margin: 0;
     z-index: 10;
-    opacity: 1;
-    animation: open 2.5s forwards;
-}
-
-@keyframes open {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 1s, opacity 1s;
 }
 
 .popup::before {
