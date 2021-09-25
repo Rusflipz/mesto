@@ -7,9 +7,8 @@ const popupAddOpen = document.querySelector(".profile__add-button");
 const popupAddClose = document.querySelector(".popup__exit-button_add");
 const containerCards = document.querySelector(".cards");
 const likeButton = document.querySelectorAll('.card__like');
-const popupAddButton = document.querySelector(".popup__add-button");
-const popupEditButton = document.querySelector(".popup__edit-button");
 const popupAddForm = document.querySelector(".popup__form_add");
+const popupEditForm = document.querySelector(".popup__form_edit");
 const profileName = document.querySelector(".profile__name_text");
 const ProfileCaption = document.querySelector(".profile__caption");
 const popupImg = document.querySelector('.popup_img');
@@ -113,7 +112,7 @@ popupImgClose.addEventListener('click', function() {
     closePopup(popupImg)
 })
 
-popupAddButton.addEventListener('click', function() {
+popupAddForm.addEventListener('submit', function() {
     const popupTextInput = popupAdd.querySelector('.popup__input_cardname');
     const popupLinkInput = popupAdd.querySelector('.popup__input_link');
     const popupText = popupTextInput.value;
@@ -129,7 +128,7 @@ popupAddButton.addEventListener('click', function() {
     closePopup(popupAdd)
 })
 
-popupEditButton.addEventListener('click', function() {
+popupEditForm.addEventListener('submit', function() {
     const name = popupNameInput.value;
     const caption = popupCaptionInput.value;
     editProfile(name, caption);
