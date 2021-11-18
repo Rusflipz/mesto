@@ -112,7 +112,7 @@ popupImgClose.addEventListener('click', function() {
     closePopup(popupImg)
 })
 
-popupAddForm.addEventListener('submit', function() {
+popupAddForm.addEventListener('submit', function(evt) {
     const popupTextInput = popupAdd.querySelector('.popup__input_cardname');
     const popupLinkInput = popupAdd.querySelector('.popup__input_link');
     const popupText = popupTextInput.value;
@@ -135,4 +135,11 @@ popupEditForm.addEventListener('submit', function() {
     popupNameInput.value = '';
     popupCaptionInput.value = '';
     closePopup(popupEdit)
+})
+
+document.addEventListener('keydown', function(evt) {
+    if (evt.keyCode = 'Esc') {
+        closePopup(popupAdd);
+        closePopup(popupEdit);
+    }
 })
