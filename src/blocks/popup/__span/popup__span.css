@@ -1,0 +1,19 @@
+.popup__span {
+    display: none;
+    margin: 0 auto;
+    position: relative;
+    top: -30px;
+    width: 358px;
+    height: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__span {
+        width: 238px;
+    }
+}
