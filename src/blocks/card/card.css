@@ -1,1 +1,6 @@
-.card {}
+.card {
+    position: relative;
+    width: 100%;
+    display: table-cell;
+    overflow: auto;
+}

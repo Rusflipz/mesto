@@ -1,62 +1,88 @@
-const containerCards = document.querySelector(".cards");
-const popupImg = document.querySelector('.popup_img');
-const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинск',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Карачаевск',
-        link: 'https://autotravel.ru/phalbum/90228/193.jpg'
-    },
-    {
-        name: 'Приисковый',
-        link: 'https://img1.liveinternet.ru/images/foto/c/1/375/1277375/f_21721208.jpg'
-    },
-    {
-        name: 'Эльбрус',
-        link: 'https://photocentra.ru/images/main75/758010_main.jpg'
-    },
-];
+import { openPopup } from '../components/modal';
+import { deleteCard, deleteLike, addLike } from '../components/api';
+export const containerCards = document.querySelector(".cards");
+export const popupImg = document.querySelector('.popup_img');
+const popupImage = document.querySelector('.popup__image');
 
-function createCard(cardData) {
+export function createCard(cardData, userId) {
+    const cardId = cardData.id
     const template = document.querySelector('#card').content;
     const cardElement = template.querySelector('.card').cloneNode(true);
-    cardElement.querySelector('.card__text').textContent = cardData.name;
-    cardElement.querySelector('.card__image').setAttribute('src', cardData.link);
-    cardElement.querySelector('.card__image').setAttribute('alt', cardData.name);
-    const likeButton = cardElement.querySelector('.card__like');
-    likeButton.addEventListener('click', function(evt) {
-        evt.target.classList.toggle('card__like_active');
-    })
-    const deleteButton = cardElement.querySelector('.card__delete-button');
-    deleteButton.addEventListener('click', function(evt) {
-        const target = evt.target;
-        const parent = target.closest('.card');
-        parent.remove();
-    })
+    cardElement.id = cardId;
     const cardImage = cardElement.querySelector('.card__image');
+    cardElement.querySelector('.card__text').textContent = cardData.name;
+    cardImage.setAttribute('src', cardData.link);
+    cardImage.setAttribute('alt', cardData.name);
+    const likeValue = cardElement.querySelector('.card__likeValue');
+    likeValue.textContent = cardData.likes;
+    const likeButton = cardElement.querySelector('.card__like');
+    for (let i = 0; i < cardData.likes; i++) {
+        if (cardData.likesOwnersArr[i] == userId) {
+            likeButton.classList.add('card__like_active');
+        }
+    };
+
+    likeButton.addEventListener('click', function(evt) {
+        like(cardId, cardElement)
+    })
+
+    const deleteButton = cardElement.querySelector('.card__delete-button');
+
+    if (!(cardData.owner == userId)) {
+        deleteButton.classList.add('card__delete-button_disable')
+    } else {
+        deleteButton.addEventListener('click', function() {
+            deleteCard(cardId)
+                .then(res => {
+                    removeCard(cardId)
+                })
+        })
+    }
     cardImage.addEventListener('click', function(evt) {
         const cardImageSrc = evt.target.getAttribute('src');
-        const popupImage = document.querySelector('.popup__image');
         popupImage.setAttribute('src', cardImageSrc);
         const cardText = cardElement.querySelector('.card__text').textContent;
         const popupText = document.querySelector('.popup__text');
         popupText.textContent = cardText;
         popupImage.setAttribute('alt', cardText);
         openPopup(popupImg);
-    })
+    });
     return cardElement;
 }
 
-initialCards.forEach(cardData => {
-    const card = createCard(cardData);
-    containerCards.append(card);
-})
+function like(id, cardElement) {
+    const button = cardElement.querySelector('.card__like')
+    if (button.classList.contains('card__like_active')) {
+        deleteLike(id)
+            .then(res => {
+                likeValue(id, res.likes.length, 'delete')
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+    } else {
+        addLike(id)
+            .then(res => {
+                likeValue(id, res.likes.length, 'add')
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+}
+
+export function likeValue(id, value, operation) {
+    const card = document.getElementById(id);
+    const button = card.querySelector('.card__like')
+    card.querySelector('.card__likeValue').textContent = value;
+    if (operation == 'add') {
+        button.classList.add('card__like_active')
+    } else {
+        button.classList.remove('card__like_active')
+    }
+}
+
+export function removeCard(id) {
+    document.getElementById(id).remove()
+}
