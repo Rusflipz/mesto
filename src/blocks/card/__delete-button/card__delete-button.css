@@ -5,7 +5,7 @@
     padding: 0;
     height: 22px;
     width: 22px;
-    background-image: url("../../../images/delete.svg");
+    background-image: url("../../../images/deletebutton.svg");
     background-color: transparent;
     border: none;
     background-repeat: no-repeat;
@@ -16,4 +16,5 @@
 
 .card__delete-button:hover {
     opacity: 0.5;
+    cursor: pointer;
 }

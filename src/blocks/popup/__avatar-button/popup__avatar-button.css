@@ -1,4 +1,4 @@
-.popup__add-button {
+.popup__avatar-button {
     padding: 0;
     margin: 0 auto;
     width: 358px;
@@ -13,13 +13,13 @@
     text-align: center;
 }
 
-.popup__add-button:hover {
+.popup__avatar-button:hover {
     opacity: 0.8;
     cursor: pointer;
 }
 
 @media screen and (max-width: 550px) {
-    .popup__add-button {
+    .popup__avatar-button {
         width: 238px;
         height: 46px;
         margin-top: 15px;
