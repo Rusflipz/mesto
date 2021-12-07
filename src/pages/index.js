@@ -17,7 +17,6 @@ const validationValue = {
 
 let userId = '';
 
-
 popupAvatarOpen.addEventListener('click', function() {
     openPopup(popupAvatar)
     disabledButton(popupAvatar)
@@ -196,7 +195,5 @@ Promise.all([profileLoading(), loadingCards()])
     });
 
 enableValidation(settings);
-
-
 
 import './index.css'
